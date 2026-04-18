@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'en' %>">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <%
+    var pageTitle = config.title;
+    if (page.current > 1) pageTitle = __('page', page.current);
+    else if (page.title) pageTitle = page.title;
+    else if (page.category) pageTitle = page.category;
+    else if (page.tag) pageTitle = page.tag;
+    else if (page.archive) {
+      if (page.year) pageTitle = page.year + (page.month ? '/' + page.month : '');
+      else pageTitle = __('archive_title');
+    }
+
+    var fullTitle = pageTitle === config.title ? config.title : pageTitle + ' | ' + config.title;
+    var description = '';
+    if (page.description) description = page.description;
+    else if (page.excerpt) description = strip_html(page.excerpt).replace(/\s+/g, ' ').trim();
+    else if (page.content) description = strip_html(page.content).replace(/\s+/g, ' ').trim().substring(0, 150);
+    else if (config.description) description = config.description;
+
+    var keywords = Array.isArray(config.keywords) ? config.keywords.join(', ') : config.keywords;
+  %>
+  <title><%= fullTitle %></title>
+  <% if (config.author) { %><meta name="author" content="<%= config.author %>"><% } %>
+  <% if (description) { %><meta name="description" content="<%= description %>"><% } %>
+  <% if (keywords) { %><meta name="keywords" content="<%= keywords %>"><% } %>
+  <meta property="og:site_name" content="<%= config.title %>">
+  <meta property="og:title" content="<%= fullTitle %>">
+  <% if (description) { %><meta property="og:description" content="<%= description %>"><% } %>
+  <meta property="og:type" content="<%= page.layout === 'post' ? 'article' : 'website' %>">
+  <link rel="icon" type="image/x-icon" href="<%- url_for('/favicon.ico') %>">
+  <link rel="alternate" href="<%- url_for('/atom.xml') %>" title="<%= config.title %>" type="application/atom+xml">
+  <link rel="alternate" href="<%- url_for('/rss.xml') %>" title="<%= config.title %>" type="application/rss+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
+  <link rel="stylesheet" href="<%- config.root %>css/m.min.css">
+  <% if (theme.latex) { %><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><% } %>
+</head>

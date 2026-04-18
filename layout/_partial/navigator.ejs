@@ -1,0 +1,32 @@
+<%
+  var navigation = theme.navigation || theme.menu || { '文章': '/', '归档': '/archives/' };
+  var social = theme.social || theme.more || {};
+  function resolveLink(link) {
+    if (!link) return '#';
+    return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
+  }
+%>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="<%- url_for('/') %>" aria-label="<%= config.title %>">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <path d="M8 9l-3 3 3 3"></path>
+        <path d="M13 16h5"></path>
+      </svg>
+      <span class="site-brand-text"><%= theme.logo || config.title %></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <% for (var label in navigation) { %>
+        <a href="<%- resolveLink(navigation[label]) %>"><%= label %></a>
+      <% } %>
+    </nav>
+
+    <div class="site-social">
+      <% for (var item in social) { %>
+        <a href="<%- resolveLink(social[item]) %>"><%= item %></a>
+      <% } %>
+    </div>
+  </div>
+</header>

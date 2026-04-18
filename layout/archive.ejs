@@ -1,0 +1,23 @@
+<%
+  var archiveTitle = __('archive_title');
+  if (page.category) archiveTitle = page.category;
+  if (page.tag) archiveTitle = page.tag;
+  if (page.archive && page.year) archiveTitle = page.year + (page.month ? '/' + page.month : '');
+%>
+<section class="page-heading">
+  <h1><%= archiveTitle %></h1>
+  <p><%= _p('page_counter', page.posts.length) %></p>
+</section>
+
+<section class="archive-shell">
+  <% page.posts.each(function(post){ %>
+    <article class="archive-item">
+      <time class="archive-time" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+      <div class="archive-detail">
+        <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+        <p><%= strip_html(post.excerpt || post.content || '').replace(/\s+/g, ' ').trim().substring(0, theme.excerpt_num || 140) %></p>
+      </div>
+    </article>
+  <% }); %>
+</section>
+<%- partial('_partial/pagination') %>

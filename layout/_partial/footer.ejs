@@ -1,0 +1,18 @@
+<%
+  var backToTop = (theme.labels && theme.labels.back_to_top) || __('back_to_top');
+  function resolveLink(link) {
+    if (!link) return '#';
+    return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
+  }
+%>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-copy"><%= theme.footer_info || ('© ' + config.title) %></div>
+    <div class="site-footer-links">
+      <a href="#top"><%= backToTop %></a>
+      <% if (theme.about && theme.about.link) { %>
+        <a href="<%- resolveLink(theme.about.link) %>"><%= theme.about.title %></a>
+      <% } %>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,46 @@
+logo: Wenyan
+
+navigation:
+  Home: /
+  Archives: /archives/
+  About: /about/
+
+social:
+  GitHub: https://github.com/yourname
+  RSS: /atom.xml
+
+home:
+  intro_title: Wenyan
+  intro_description: A minimal Hexo theme focused on reading, rhythm, and typography.
+  featured_title: Featured Posts
+
+labels:
+  articles_title: Articles
+  table_of_contents: Table of Contents
+  back_to_top: Back to top
+
+about:
+  title: Inspiration
+  link: https://github.com/guangzhengli/nextjs-blog-template
+
+toc: true
+
+# If you want to use valine,you should get the appId and appKey form https://leancloud.cn ,more setting please see https://valine.js.org
+valine:
+  enable: false # set to true if you want to use Valine
+  appId: # your leancloud appId
+  appKey: # your leancloud appKey
+  guest_info: nick,mail,link # valine comment header info
+  placeholder: Leave a comment # valine comment input placeholder
+  avatar: mm # gravatar style https://valine.js.org/avatar
+  pageSize: 10 # comment list page size
+  verify: false # valine verify code (true/false)
+  notify: false # valine mail notify (true/false)
+  lang: en
+
+
+excerpt_num: 140
+
+footer_info: © Your Name
+
+latex: true

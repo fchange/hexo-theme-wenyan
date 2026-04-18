@@ -1,0 +1,13 @@
+<%- partial('_partial/head') %>
+<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %>">
+  <a id="top"></a>
+  <div class="site-shell">
+    <%- partial('_partial/navigator') %>
+    <div class="site-main">
+      <%- body %>
+    </div>
+    <%- partial('_partial/footer') %>
+  </div>
+  <%- partial('_partial/after_footer') %>
+</body>
+</html>

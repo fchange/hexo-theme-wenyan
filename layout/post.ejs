@@ -1,0 +1,38 @@
+<%
+  var plainContent = strip_html(page.content || '').replace(/\s+/g, '');
+  var wordCount = plainContent.length;
+  var tocTitle = (theme.labels && theme.labels.table_of_contents) || __('table_of_contents');
+  var backToTop = (theme.labels && theme.labels.back_to_top) || __('back_to_top');
+  var tocHtml = '';
+  if (page.toc === undefined ? theme.toc : page.toc) {
+    tocHtml = toc(page.content, { list_number: false, max_depth: 3 });
+  }
+  var hasToc = tocHtml && tocHtml.indexOf('<ol') !== -1;
+%>
+<section class="post-shell">
+  <article class="post-article">
+    <header class="post-header">
+      <h1 class="post-title"><%= page.title %></h1>
+      <p class="post-meta">
+        <time datetime="<%= date_xml(page.date) %>"><%= page.date.format(config.date_format) %></time>
+        <% if (wordCount) { %><span>·</span><span><%= wordCount %> 字</span><% } %>
+      </p>
+    </header>
+
+    <div class="post-content">
+      <%- page.content %>
+    </div>
+
+    <%- partial('_partial/post/comment') %>
+  </article>
+
+  <% if (hasToc) { %>
+    <aside class="post-sidebar">
+      <div class="post-sidebar-inner">
+        <h2><%= tocTitle %></h2>
+        <div class="post-toc"><%- tocHtml %></div>
+        <a class="back-top-link" href="#top"><%= backToTop %></a>
+      </div>
+    </aside>
+  <% } %>
+</section>

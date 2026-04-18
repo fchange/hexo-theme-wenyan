@@ -1,0 +1,40 @@
+<%
+  var introTitle = (theme.home && theme.home.intro_title) || theme.logo || config.title;
+  var introDescription = (theme.home && theme.home.intro_description) || config.description || config.subtitle || '';
+  var featuredTitle = (theme.home && theme.home.featured_title) || __('featured_title');
+  var articlesTitle = (theme.labels && theme.labels.articles_title) || __('articles_title');
+  var social = theme.social || theme.more || {};
+  var currentPage = Number(page.current || 1);
+  function resolveLink(link) {
+    if (!link) return '#';
+    return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
+  }
+%>
+<% if (currentPage === 1) { %>
+  <section class="home-hero">
+    <h1><%= introTitle %></h1>
+    <% if (introDescription) { %>
+      <p><%= introDescription %></p>
+    <% } %>
+    <% if (Object.keys(social).length) { %>
+      <div class="home-hero-links">
+        <% var socialIndex = 0; %>
+        <% for (var label in social) { %>
+          <% if (socialIndex > 0) { %><span>·</span><% } %>
+          <a href="<%- resolveLink(social[label]) %>"><%= label %></a>
+          <% socialIndex += 1; %>
+        <% } %>
+      </div>
+    <% } %>
+  </section>
+<% } %>
+
+<section class="post-list-section">
+  <h2 class="section-title"><%= currentPage === 1 ? featuredTitle : articlesTitle %></h2>
+  <div class="post-list">
+    <% page.posts.each(function(item){ %>
+      <%- partial('_partial/article', {item: item}) %>
+    <% }); %>
+  </div>
+</section>
+<%- partial('_partial/pagination') %>

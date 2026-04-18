@@ -1,0 +1,18 @@
+<%
+  var plainContent = strip_html(item.content || '').replace(/\s+/g, ' ').trim();
+  var summaryText = strip_html(item.excerpt || '').replace(/\s+/g, ' ').trim();
+  if (!summaryText) summaryText = plainContent.substring(0, theme.excerpt_num || 140);
+  var wordCount = plainContent.replace(/\s+/g, '').length;
+%>
+<article class="post-card">
+  <a class="post-card-link" href="<%- url_for(item.path) %>">
+    <div class="post-card-header">
+      <h3 class="post-card-title"><%= item.title %></h3>
+      <p class="post-card-meta">
+        <time datetime="<%= date_xml(item.date) %>"><%= item.date.format(config.date_format) %></time>
+        <% if (wordCount) { %><span>·</span><span><%= wordCount %> 字</span><% } %>
+      </p>
+    </div>
+    <p class="post-card-summary"><%= summaryText %></p>
+  </a>
+</article>
