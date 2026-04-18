@@ -51,11 +51,6 @@ You will usually want to adjust:
 - optional Valine comments
 - optional MathJax support
 
-## Screenshots
-
-![](/screenShots/ver1.0-index.jpg)
-![](/screenShots/ver1.0-article.jpg)
-
 ## Notes
 
 - Search is not bundled. Use a Hexo search generator such as `hexo-generator-search`.

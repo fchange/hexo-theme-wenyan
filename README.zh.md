@@ -51,11 +51,6 @@ theme: wenyan
 - 可选 Valine 评论
 - 可选 MathJax 支持
 
-## 截图
-
-![](/screenShots/ver1.0-index.jpg)
-![](/screenShots/ver1.0-article.jpg)
-
 ## 说明
 
 - 搜索功能默认不内置，可以搭配 `hexo-generator-search` 等插件使用。
