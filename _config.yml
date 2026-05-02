@@ -1,9 +1,10 @@
 logo: Wenyan
 
 navigation:
-  Home: /
-  Archives: /archives/
-  About: /about/
+  home: /
+  archives: /archives/
+  friends: /friends/
+  about: /about/
 
 social:
   GitHub: https://github.com/yourname
@@ -12,7 +13,6 @@ social:
 home:
   intro_title: Wenyan
   intro_description: A minimal Hexo theme focused on reading, rhythm, and typography.
-  featured_title: Featured Posts
 
 labels:
   articles_title: Articles

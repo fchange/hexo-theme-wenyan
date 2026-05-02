@@ -1,7 +1,7 @@
 <%
   var introTitle = (theme.home && theme.home.intro_title) || theme.logo || config.title;
   var introDescription = (theme.home && theme.home.intro_description) || config.description || config.subtitle || '';
-  var featuredTitle = (theme.home && theme.home.featured_title) || __('featured_title');
+  var featuredTitle = (theme.home && theme.home.featured_title) || 'featured_title';
   var articlesTitle = (theme.labels && theme.labels.articles_title) || __('articles_title');
   var social = theme.social || theme.more || {};
   var currentPage = Number(page.current || 1);
@@ -30,7 +30,7 @@
 <% } %>
 
 <section class="post-list-section">
-  <h2 class="section-title"><%= currentPage === 1 ? featuredTitle : articlesTitle %></h2>
+  <h2 class="section-title"><%= currentPage === 1 ? _p(featuredTitle) : articlesTitle %></h2>
   <div class="post-list">
     <% page.posts.each(function(item){ %>
       <%- partial('_partial/article', {item: item}) %>
