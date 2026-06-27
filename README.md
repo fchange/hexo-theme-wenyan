@@ -4,6 +4,8 @@
 
 Wenyan is a minimal, typography-first Hexo theme for personal blogs.
 
+It is designed for calm writing, focused reading, and lightweight customization.
+
 It combines:
 
 - a quiet paper-like reading surface
