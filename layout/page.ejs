@@ -1,12 +1,15 @@
 <section class="page-heading">
-  <h1><%= page.title %></h1>
+  <h1><%= _p(page.title) %></h1>
   <% if (page.description || config.subtitle) { %>
     <p><%= page.description || config.subtitle %></p>
   <% } %>
 </section>
 
-<section class="page-shell">
+<section class="page-shell" style="padding-top: 0;">
   <article class="post-content page-content">
+    <% if (page.type === 'links') { %>
+      <%- partial('_partial/links') %>
+    <% } %>
     <%- page.content %>
   </article>
 </section>

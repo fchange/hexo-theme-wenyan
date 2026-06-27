@@ -19,7 +19,7 @@
 
     <nav class="site-nav" aria-label="Main navigation">
       <% for (var label in navigation) { %>
-        <a href="<%- resolveLink(navigation[label]) %>"><%= label %></a>
+        <a href="<%- resolveLink(navigation[label]) %>"><%= _p(label) %></a>
       <% } %>
     </nav>
 

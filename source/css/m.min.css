@@ -71,7 +71,7 @@ img {
 }
 
 .is-post .site-header-inner {
-  width: min(100%, 72rem);
+  /* width: min(100%, 72rem); */
 }
 
 .site-header-inner {
@@ -149,7 +149,8 @@ img {
 .page-heading,
 .page-shell,
 .archive-shell {
-  padding: 2rem 1.5rem 0;
+  /* padding: 2rem 1.5rem 0; */
+  padding: 2rem 0;
 }
 
 .home-hero {
@@ -159,8 +160,8 @@ img {
 .home-hero h1,
 .page-heading h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 4vw, 3.4rem);
-  line-height: 1.08;
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  line-height: 2;
   letter-spacing: -0.03em;
 }
 
@@ -301,7 +302,7 @@ img {
 
 .post-title {
   margin: 0;
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
   line-height: 1.08;
   letter-spacing: -0.03em;
 }
@@ -696,9 +697,16 @@ img {
 @media (min-width: 1280px) {
   .post-shell {
     display: grid;
-    grid-template-columns: minmax(0, 48rem) 18rem;
+    /* grid-template-columns: minmax(0, 48rem) 18rem; */
+    grid-template-columns: minmax(0, 48rem);
     gap: 4rem;
-    align-items: start;
+    /* align-items: start; */
+    justify-content: center;
+  }
+
+  .post-shell-no-toc {
+    grid-template-columns: minmax(0, 48rem);
+    justify-content: center;
   }
 
   .post-sidebar {
@@ -710,7 +718,7 @@ img {
   .post-sidebar-inner {
     position: fixed;
     top: 5.75rem;
-    left: calc(50% + 16rem);
+    right: 2rem;
     width: 18rem;
     max-height: calc(100vh - 6.75rem);
   }
@@ -780,4 +788,54 @@ img {
     width: 100%;
     justify-content: flex-start;
   }
+}
+
+.friends-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 0 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.friend-item:hover {
+  border-color: var(--theme);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.friend-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+.friend-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.friend-desc {
+  opacity: .9;
+}
+
+.friends-list > a {
+  text-decoration: none;
 }

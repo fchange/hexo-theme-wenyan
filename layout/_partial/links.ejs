@@ -1,0 +1,18 @@
+<%
+  var friends = site.data.friends || [];
+%>
+<% if (friends.length > 0) { %>
+<div class="friends-list">
+  <% friends.forEach(function(friend) { %>
+    <a class="friend-item" href="<%= friend.url %>" target="_blank" rel="noopener">
+      <img class="friend-avatar" src="<%= friend.icon %>" alt="<%= friend.name %>">
+      <div class="friend-info">
+        <span class="friend-name"><%= friend.name %></span>
+        <% if (friend.desc) { %>
+        <span class="friend-desc"><%= friend.desc %></span>
+        <% } %>
+      </div>
+    </a>
+  <% }); %>
+</div>
+<% } %>
