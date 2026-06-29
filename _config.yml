@@ -6,9 +6,22 @@ navigation:
   friends: /friends/
   about: /about/
 
+# Optional ordered list form. If set, this takes precedence over `navigation`.
+# Useful when you need precise per-site ordering without inherited keys.
+navigation_items:
+#  - label: home
+#    link: /
+#  - label: archives
+#    link: /archives/
+
 social:
   GitHub: https://github.com/yourname
   RSS: /atom.xml
+
+# Optional ordered list form. If set, this takes precedence over `social`.
+social_items:
+#  - label: GitHub
+#    link: https://github.com/yourname
 
 home:
   intro_title: Wenyan

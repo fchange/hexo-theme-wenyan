@@ -37,11 +37,23 @@ You will usually want to adjust:
 
 - `logo`
 - `navigation`
+- `navigation_items`
 - `social`
+- `social_items`
 - `home`
 - `labels`
 - `footer_info`
 - `valine`
+
+`navigation_items` and `social_items` are optional ordered list forms. When set, they take precedence over `navigation` and `social`:
+
+```yml
+navigation_items:
+  - label: Articles
+    link: /
+  - label: Archives
+    link: /archives/
+```
 
 ## Features
 

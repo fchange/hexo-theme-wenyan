@@ -1,9 +1,20 @@
 <%
-  var navigation = theme.navigation || theme.menu || { '文章': '/', '归档': '/archives/' };
-  var social = theme.social || theme.more || {};
+  var navigation = theme.navigation_items || theme.navigation || theme.menu || { '文章': '/', '归档': '/archives/' };
+  var social = theme.social_items || theme.social || theme.more || {};
   function resolveLink(link) {
     if (!link) return '#';
     return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
+  }
+  function eachLink(items, callback) {
+    if (Array.isArray(items)) {
+      items.forEach(function(item) {
+        callback(item.label || item.name || item.title, item.link || item.url || item.href);
+      });
+      return;
+    }
+    for (var label in items) {
+      callback(label, items[label]);
+    }
   }
 %>
 <header class="site-header">
@@ -18,15 +29,15 @@
     </a>
 
     <nav class="site-nav" aria-label="Main navigation">
-      <% for (var label in navigation) { %>
-        <a href="<%- resolveLink(navigation[label]) %>"><%= _p(label) %></a>
-      <% } %>
+      <% eachLink(navigation, function(label, link) { %>
+        <a href="<%- resolveLink(link) %>"><%= _p(label) %></a>
+      <% }) %>
     </nav>
 
     <div class="site-social">
-      <% for (var item in social) { %>
-        <a href="<%- resolveLink(social[item]) %>"><%= item %></a>
-      <% } %>
+      <% eachLink(social, function(label, link) { %>
+        <a href="<%- resolveLink(link) %>"><%= label %></a>
+      <% }) %>
     </div>
   </div>
 </header>

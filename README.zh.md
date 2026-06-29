@@ -35,11 +35,23 @@ theme: wenyan
 
 - `logo`
 - `navigation`
+- `navigation_items`
 - `social`
+- `social_items`
 - `home`
 - `labels`
 - `footer_info`
 - `valine`
+
+`navigation_items` 和 `social_items` 是可选的有序列表写法。配置后会优先于 `navigation` 和 `social`：
+
+```yml
+navigation_items:
+  - label: 文章
+    link: /
+  - label: 归档
+    link: /archives/
+```
 
 ## 特性
 
