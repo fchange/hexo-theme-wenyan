@@ -27,6 +27,27 @@ theme: wenyan
 
 3. 按需合并 `themes/wenyan/_config.yml` 里的主题配置。
 
+## 快速开始
+
+安装主题后，在 Hexo 项目中本地预览：
+
+```bash
+hexo clean
+hexo server
+```
+
+然后打开 Hexo 输出的本地预览地址，通常是 `http://localhost:4000`。
+
+如果文章页需要目录，可以在文章 front matter 中开启 `toc: true`：
+
+```yml
+---
+title: 我的文章
+date: 2026-01-01
+toc: true
+---
+```
+
 ## 配置
 
 主题主要配置都在 [`_config.yml`](/_config.yml)。
@@ -67,6 +88,7 @@ navigation_items:
 
 - 搜索功能默认不内置，可以搭配 `hexo-generator-search` 等插件使用。
 - 如果需要 LaTeX，请按你的 Hexo 渲染链安装对应 renderer，并保留 `latex: true`。
+- 主题专注于文章阅读体验，不包含完整资源构建流程；自定义脚本和样式建议尽量放在 Hexo 站点侧维护。
 
 ## 致谢
 
