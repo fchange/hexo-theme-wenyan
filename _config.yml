@@ -26,6 +26,7 @@ social_items:
 home:
   intro_title: Wenyan
   intro_description: A minimal Hexo theme focused on reading, rhythm, and typography.
+  featured_title: featured_title
 
 labels:
   articles_title: Articles
@@ -53,6 +54,21 @@ valine:
 
 
 excerpt_num: 140
+
+# Lightweight page motion. The article header expands from 48rem to 72rem,
+# matching the upstream Next.js transition.
+motion:
+  header_expand: true
+  duration: 500
+
+# Footer supports ordered list links, or the legacy `footer_info` text below.
+footer:
+  enabled: true
+  text: © Your Name
+  description: Writing, design, and technology.
+  links:
+    GitHub: https://github.com/yourname
+    RSS: /atom.xml
 
 footer_info: © Your Name
 

@@ -29,9 +29,10 @@
   <% if (hasToc) { %>
     <aside class="post-sidebar">
       <div class="post-sidebar-inner">
-        <h2><%= tocTitle %></h2>
         <div class="post-toc"><%- tocHtml %></div>
-        <a class="back-top-link" href="#top"><%= backToTop %></a>
+        <a class="back-top-link" href="#top" aria-label="<%= backToTop %>" title="<%= backToTop %>">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </a>
       </div>
     </aside>
   <% } %>

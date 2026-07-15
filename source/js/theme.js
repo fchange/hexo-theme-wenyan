@@ -105,9 +105,112 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCodeBlocks);
-  } else {
+  function initMobileMenu() {
+    var trigger = document.querySelector('.mobile-menu-button');
+    var close = document.querySelector('.mobile-menu-close');
+    var menu = document.querySelector('.mobile-navigation');
+    var backdrop = document.querySelector('.mobile-menu-backdrop');
+    if (!trigger || !close || !menu || !backdrop) return;
+
+    function setOpen(open) {
+      trigger.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-hidden', String(!open));
+      menu.classList.toggle('is-open', open);
+      backdrop.hidden = !open;
+      document.body.classList.toggle('menu-open', open);
+    }
+
+    trigger.addEventListener('click', function () { setOpen(true); });
+    close.addEventListener('click', function () { setOpen(false); });
+    backdrop.addEventListener('click', function () { setOpen(false); });
+    window.addEventListener('resize', function () {
+      if (window.matchMedia('(min-width: 48rem)').matches) setOpen(false);
+    });
+  }
+
+  function initToc() {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.post-toc a'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    var headings = links.map(function (link) {
+      var id = decodeURIComponent((link.getAttribute('href') || '').replace(/^#/, ''));
+      return document.getElementById(id);
+    }).filter(Boolean);
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (link) {
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { rootMargin: '0% 0% -80% 0%' });
+    headings.forEach(function (heading) { observer.observe(heading); });
+  }
+
+  function initThemeToggle() {
+    var button = document.querySelector('.theme-toggle');
+    if (!button) return;
+
+    function updateLabel(theme) {
+      button.setAttribute('aria-label', theme === 'dark' ? '切换到浅色主题' : '切换到深色主题');
+      button.setAttribute('title', theme === 'dark' ? '浅色主题' : '深色主题');
+    }
+
+    updateLabel(document.documentElement.dataset.theme || 'light');
+    button.addEventListener('click', function () {
+      var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('wenyan-theme', next); } catch (error) {}
+      document.cookie = 'wenyan-theme=' + next + '; path=/; max-age=31536000; SameSite=Lax';
+      updateLabel(next);
+    });
+  }
+
+  function initHeaderMotion() {
+    if (!document.body.classList.contains('has-header-motion')) return;
+    if (!document.body.classList.contains('is-post')) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.body.classList.add('header-expanded');
+      return;
+    }
+
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        document.body.classList.add('header-expanded');
+      });
+    });
+  }
+
+  function initBackToTop() {
+    var link = document.querySelector('.back-top-link');
+    if (!link) return;
+
+    function updateVisibility() {
+      link.classList.toggle('is-visible', window.scrollY > 320);
+    }
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      window.history.replaceState(null, '', window.location.pathname + window.location.search + '#top');
+    });
+    updateVisibility();
+  }
+
+  function initTheme() {
     initCodeBlocks();
+    initMobileMenu();
+    initToc();
+    initThemeToggle();
+    initHeaderMotion();
+    initBackToTop();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTheme);
+  } else {
+    initTheme();
   }
 })();

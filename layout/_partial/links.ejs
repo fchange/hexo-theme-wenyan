@@ -5,7 +5,11 @@
 <div class="friends-list">
   <% friends.forEach(function(friend) { %>
     <a class="friend-item" href="<%= friend.url %>" target="_blank" rel="noopener">
-      <img class="friend-avatar" src="<%= friend.icon %>" alt="<%= friend.name %>">
+      <% if (friend.icon) { %>
+      <img class="friend-avatar" src="<%= friend.icon %>" alt="" loading="lazy">
+      <% } else { %>
+      <span class="friend-avatar friend-avatar-fallback" aria-hidden="true"><%= (friend.name || '?').charAt(0) %></span>
+      <% } %>
       <div class="friend-info">
         <span class="friend-name"><%= friend.name %></span>
         <% if (friend.desc) { %>

@@ -5,6 +5,10 @@
   var articlesTitle = (theme.labels && theme.labels.articles_title) || __('articles_title');
   var social = theme.social || theme.more || {};
   var currentPage = Number(page.current || 1);
+  var visiblePosts = page.posts.toArray();
+  if (currentPage === 1) {
+    visiblePosts = visiblePosts.filter(function(post) { return post.featured === true; });
+  }
   function resolveLink(link) {
     if (!link) return '#';
     return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
@@ -32,7 +36,7 @@
 <section class="post-list-section">
   <h2 class="section-title"><%= currentPage === 1 ? _p(featuredTitle) : articlesTitle %></h2>
   <div class="post-list">
-    <% page.posts.each(function(item){ %>
+    <% visiblePosts.forEach(function(item){ %>
       <%- partial('_partial/article', {item: item}) %>
     <% }); %>
   </div>

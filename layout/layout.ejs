@@ -1,5 +1,9 @@
 <%- partial('_partial/head') %>
-<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %>">
+<%
+  var headerMotion = !theme.motion || theme.motion.header_expand !== false;
+  var motionDuration = (theme.motion && Number(theme.motion.duration)) || 500;
+%>
+<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %><%= headerMotion ? ' has-header-motion' : '' %>" style="--header-motion-duration: <%= motionDuration %>ms">
   <a id="top"></a>
   <div class="site-shell">
     <%- partial('_partial/navigator') %>

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <%
     var pageTitle = config.title;
@@ -36,7 +37,19 @@
   <link rel="icon" type="image/x-icon" href="<%- url_for('/favicon.ico') %>">
   <link rel="alternate" href="<%- url_for('/atom.xml') %>" title="<%= config.title %>" type="application/atom+xml">
   <link rel="alternate" href="<%- url_for('/rss.xml') %>" title="<%= config.title %>" type="application/rss+xml">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('wenyan-theme'); } catch (error) {}
+      if (!saved) {
+        var match = document.cookie.match(/(?:^|; )wenyan-theme=(light|dark)/);
+        saved = match && match[1];
+      }
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
-  <link rel="stylesheet" href="<%- config.root %>css/m.min.css">
+  <link rel="stylesheet" href="<%- url_for('/css/theme.css') %>">
   <% if (theme.latex) { %><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><% } %>
 </head>

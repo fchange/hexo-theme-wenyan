@@ -1,18 +1,33 @@
 <%
-  var backToTop = (theme.labels && theme.labels.back_to_top) || __('back_to_top');
+  var footer = theme.footer || {};
+  var footerLinks = footer.links || {};
+  var footerText = footer.text || theme.footer_info || ('© ' + config.title);
   function resolveLink(link) {
     if (!link) return '#';
     return /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link) ? link : url_for(link);
   }
+  function eachLink(items, callback) {
+    if (Array.isArray(items)) {
+      items.forEach(function(item) { callback(item.label || item.title, item.link || item.url || item.href); });
+      return;
+    }
+    for (var label in items) callback(label, items[label]);
+  }
 %>
+<% if (footer.enabled !== false) { %>
 <footer class="site-footer">
   <div class="site-footer-inner">
-    <div class="site-footer-copy"><%= theme.footer_info || ('© ' + config.title) %></div>
-    <div class="site-footer-links">
-      <a href="#top"><%= backToTop %></a>
-      <% if (theme.about && theme.about.link) { %>
-        <a href="<%- resolveLink(theme.about.link) %>"><%= theme.about.title %></a>
-      <% } %>
+    <div class="site-footer-content">
+      <p class="site-footer-copy"><%= footerText %></p>
+      <% if (footer.description) { %><p class="site-footer-description"><%= footer.description %></p><% } %>
     </div>
+    <% if (Object.keys(footerLinks).length) { %>
+      <nav class="site-footer-links" aria-label="Footer navigation">
+        <% eachLink(footerLinks, function(label, link) { %>
+          <a href="<%- resolveLink(link) %>"><%= label %></a>
+        <% }) %>
+      </nav>
+    <% } %>
   </div>
 </footer>
+<% } %>
