@@ -3,21 +3,35 @@
   if (page.category) archiveTitle = page.category;
   if (page.tag) archiveTitle = page.tag;
   if (page.archive && page.year) archiveTitle = page.year + (page.month ? '/' + page.month : '');
+  var groupedPosts = {};
+  page.posts.each(function(post) {
+    var year = post.date.year();
+    if (!groupedPosts[year]) groupedPosts[year] = [];
+    groupedPosts[year].push(post);
+  });
+  var years = Object.keys(groupedPosts).sort(function(a, b) { return Number(b) - Number(a); });
 %>
 <section class="page-heading">
   <h1><%= archiveTitle %></h1>
   <p><%= _p('page_counter', page.posts.length) %></p>
 </section>
 
-<section class="archive-shell">
-  <% page.posts.each(function(post){ %>
-    <article class="archive-item">
-      <time class="archive-time" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
-      <div class="archive-detail">
-        <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-        <p><%= strip_html(post.excerpt || post.content || '').replace(/\s+/g, ' ').trim().substring(0, theme.excerpt_num || 140) %></p>
-      </div>
-    </article>
+<div class="archive-shell">
+  <% years.forEach(function(year) { %>
+    <section class="archive-year" aria-labelledby="archive-year-<%= year %>">
+      <h2 id="archive-year-<%= year %>"><%= year %></h2>
+      <ol class="archive-list">
+        <% groupedPosts[year].forEach(function(post) { %>
+          <li class="archive-item">
+            <time class="archive-time" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+            <div class="archive-detail">
+              <a href="<%- post.link || url_for(post.path) %>"<% if (post.link) { %> target="_blank" rel="noopener noreferrer"<% } %>><%= post.title %><% if (post.link) { %> <span aria-label="<%= __('external_link') %>">↗</span><% } %></a>
+              <p><%= strip_html(post.excerpt || post.content || '').replace(/\s+/g, ' ').trim().substring(0, theme.excerpt_num || 140) %></p>
+            </div>
+          </li>
+        <% }); %>
+      </ol>
+    </section>
   <% }); %>
-</section>
+</div>
 <%- partial('_partial/pagination') %>

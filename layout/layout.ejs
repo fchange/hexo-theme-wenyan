@@ -3,7 +3,7 @@
   var headerMotion = !theme.motion || theme.motion.header_expand !== false;
   var motionDuration = (theme.motion && Number(theme.motion.duration)) || 500;
 %>
-<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %><%= headerMotion ? ' has-header-motion' : '' %>" style="--header-motion-duration: <%= motionDuration %>ms">
+<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %><%= headerMotion ? ' has-header-motion' : '' %>" style="--header-motion-duration: <%= motionDuration %>ms" data-copy-label="<%= __('copy') %>" data-copied-label="<%= __('copied') %>" data-copy-failed-label="<%= __('copy_failed') %>" data-light-theme-label="<%= __('light_theme') %>" data-dark-theme-label="<%= __('dark_theme') %>">
   <a id="top"></a>
   <div class="site-shell">
     <%- partial('_partial/navigator') %>

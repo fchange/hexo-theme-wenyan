@@ -33,6 +33,15 @@ labels:
   table_of_contents: Table of Contents
   back_to_top: Back to top
 
+# Optional Google `site:` search. No local index or generator is required.
+search:
+  enabled: false
+
+# Optional third-party page and site counters. Disabled by default for privacy.
+stats:
+  busuanzi: false
+  endpoint: https://busuanzi.ibruce.info/busuanzi
+
 about:
   title: Inspiration
   link: https://github.com/guangzhengli/nextjs-blog-template

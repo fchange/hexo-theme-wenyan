@@ -1,4 +1,18 @@
-<div id="site_search" class="">
-  <input type="text" id="local-search-input" name="q" placeholder="search" class="form-control"/>
-</div>
-<div id="local-search-result"></div>
+<% if (theme.search && theme.search.enabled) { %>
+  <div class="search-dialog" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
+    <button class="search-backdrop" type="button" aria-label="<%= __('close_search') %>"></button>
+    <div class="search-panel">
+      <div class="search-panel-header">
+        <h2 id="search-title"><%= __('search') %></h2>
+        <button class="search-close" type="button" aria-label="<%= __('close_search') %>" title="<%= __('close_search') %>">×</button>
+      </div>
+      <form class="search-form" action="https://www.google.com/search" method="get" target="_blank">
+        <input type="hidden" name="sitesearch" value="<%= config.url %>">
+        <label class="sr-only" for="site-search-input"><%= __('search') %></label>
+        <input id="site-search-input" name="q" type="search" autocomplete="off" required placeholder="<%= __('search_placeholder') %>">
+        <button type="submit"><%= __('search_submit') %></button>
+      </form>
+      <p><%= __('search_hint') %></p>
+    </div>
+  </div>
+<% } %>

@@ -70,13 +70,13 @@
     var button = document.createElement('button');
     button.className = 'code-copy-button';
     button.type = 'button';
-    button.textContent = 'Copy';
+    button.textContent = document.body.dataset.copyLabel || 'Copy';
 
     button.addEventListener('click', function () {
       var originalText = button.textContent;
       copyText(codePre.innerText.replace(/\n$/, ''))
         .then(function () {
-          button.textContent = 'Copied';
+          button.textContent = document.body.dataset.copiedLabel || 'Copied';
           button.classList.add('is-copied');
           window.setTimeout(function () {
             button.textContent = originalText;
@@ -84,7 +84,7 @@
           }, 1600);
         })
         .catch(function () {
-          button.textContent = 'Failed';
+          button.textContent = document.body.dataset.copyFailedLabel || 'Failed';
           window.setTimeout(function () {
             button.textContent = originalText;
           }, 1600);
@@ -151,8 +151,9 @@
     if (!button) return;
 
     function updateLabel(theme) {
-      button.setAttribute('aria-label', theme === 'dark' ? '切换到浅色主题' : '切换到深色主题');
-      button.setAttribute('title', theme === 'dark' ? '浅色主题' : '深色主题');
+      var label = theme === 'dark' ? document.body.dataset.lightThemeLabel : document.body.dataset.darkThemeLabel;
+      button.setAttribute('aria-label', label);
+      button.setAttribute('title', label);
     }
 
     updateLabel(document.documentElement.dataset.theme || 'light');
@@ -162,6 +163,37 @@
       try { localStorage.setItem('wenyan-theme', next); } catch (error) {}
       document.cookie = 'wenyan-theme=' + next + '; path=/; max-age=31536000; SameSite=Lax';
       updateLabel(next);
+    });
+  }
+
+  function initSearch() {
+    var trigger = document.querySelector('.search-toggle');
+    var dialog = document.querySelector('.search-dialog');
+    if (!trigger || !dialog) return;
+
+    var input = dialog.querySelector('#site-search-input');
+    var closeButtons = dialog.querySelectorAll('.search-close, .search-backdrop');
+    var previousFocus = null;
+
+    function setOpen(open) {
+      dialog.hidden = !open;
+      document.body.classList.toggle('search-open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) {
+        previousFocus = document.activeElement;
+        window.requestAnimationFrame(function () { input.focus(); });
+      } else if (previousFocus) {
+        previousFocus.focus();
+      }
+    }
+
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.addEventListener('click', function () { setOpen(true); });
+    for (var i = 0; i < closeButtons.length; i += 1) {
+      closeButtons[i].addEventListener('click', function () { setOpen(false); });
+    }
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !dialog.hidden) setOpen(false);
     });
   }
 
@@ -204,6 +236,7 @@
     initMobileMenu();
     initToc();
     initThemeToggle();
+    initSearch();
     initHeaderMotion();
     initBackToTop();
   }

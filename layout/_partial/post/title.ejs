@@ -1,19 +1,15 @@
-<% if (item.link){ %>
-  <h1 class="arc-title">
-      <a href="<%- item.link %>">
-          <%= item.title %>
-      </a>
-  </h1>
-<% } else { %>
-  <% if (index){ %>
-    <h1 class="index-title">
-        <a href="<%- config.root %><%- item.path %>">
-            <%= item.title %>
-        </a>
-    </h1>
-  <% } else { %>
-    <h1 class="page-title center">
-        <%= item.title %>
-    </h1>
+<%
+  var isIndex = typeof index !== 'undefined' ? index : false;
+  var heading = isIndex ? 'h3' : 'h1';
+  var className = isIndex ? 'post-card-title' : 'post-title';
+  var target = isIndex ? '' : (item.link || '');
+  var external = Boolean(item.link);
+%>
+<<%= heading %> class="<%= className %>">
+  <% if (target) { %><a href="<%- target %>"<% if (external) { %> target="_blank" rel="noopener noreferrer"<% } %>><% } %>
+  <%= item.title %>
+  <% if (external) { %>
+    <svg class="external-link-icon" viewBox="0 0 24 24" aria-label="<%= __('external_link') %>"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
   <% } %>
-<% } %>
+  <% if (target) { %></a><% } %>
+</<%= heading %>>

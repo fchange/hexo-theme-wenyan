@@ -2,16 +2,13 @@
   var plainContent = strip_html(item.content || '').replace(/\s+/g, ' ').trim();
   var summaryText = strip_html(item.excerpt || '').replace(/\s+/g, ' ').trim();
   if (!summaryText) summaryText = plainContent.substring(0, theme.excerpt_num || 140);
-  var wordCount = plainContent.replace(/\s+/g, '').length;
+  var target = item.link || url_for(item.path);
 %>
 <article class="post-card">
-  <a class="post-card-link" href="<%- url_for(item.path) %>">
+  <a class="post-card-link" href="<%- target %>"<% if (item.link) { %> target="_blank" rel="noopener noreferrer"<% } %>>
     <div class="post-card-header">
-      <h3 class="post-card-title"><%= item.title %></h3>
-      <p class="post-card-meta">
-        <time datetime="<%= date_xml(item.date) %>"><%= item.date.format(config.date_format) %></time>
-        <% if (wordCount) { %><span>·</span><span><%= wordCount %> 字</span><% } %>
-      </p>
+      <%- partial('post/title', {item: item, index: true}) %>
+      <%- partial('post/meta', {item: item, compact: true}) %>
     </div>
     <p class="post-card-summary"><%= summaryText %></p>
   </a>

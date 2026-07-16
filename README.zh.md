@@ -66,6 +66,8 @@ toc: true
 - `footer_info`
 - `footer`
 - `motion`
+- `search`
+- `stats`
 - `valine`
 
 `navigation_items` 和 `social_items` 是可选的有序列表写法。配置后会优先于 `navigation` 和 `social`：
@@ -76,6 +78,17 @@ navigation_items:
     link: /
   - label: 归档
     link: /archives/
+```
+
+搜索使用 Google 站内搜索，不需要生成本地索引；不蒜子阅读统计同样是可选能力，两者默认关闭：
+
+```yml
+search:
+  enabled: true
+
+stats:
+  busuanzi: true
+  endpoint: https://busuanzi.ibruce.info/busuanzi
 ```
 
 文章页 Header 会复刻上游模板，从 `48rem` 平滑扩展至 `72rem`：
@@ -106,6 +119,8 @@ footer:
 - 与整体风格统一的归档页
 - 宽屏下带粘性目录的文章页
 - 可配置 Footer 和友链页面
+- 分类、标签、外链文章和完整国际化的文章信息
+- 可选站内搜索与主动启用的访问统计
 - 带复制按钮的代码块
 - WenKai 字体集成
 - 可选 Valine 评论
@@ -122,7 +137,7 @@ featured: true
 
 ## 说明
 
-- 搜索功能默认不内置，可以搭配 `hexo-generator-search` 等插件使用。
+- 搜索会打开 Google 站内搜索结果，不需要额外安装 Hexo 搜索生成器。
 - 如果需要 LaTeX，请按你的 Hexo 渲染链安装对应 renderer，并保留 `latex: true`。
 - 主题样式以 `source/css/theme.css` 为唯一来源，不需要额外构建步骤。
 - [fchange.github.io](https://fchange.github.io/) 是当前版本的线上集成与效果参考。

@@ -1,36 +1,25 @@
-<time datetime="<%= date_xml(item.date) %>" itemprop="datePublished">
-  <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
-  </svg>
-  &nbsp;
-  <%= item.date.format(config.date_format) %>
-</time>
-
-<% if (item.categories && item.categories.length){ %>
-    <% var cats = [];
-        item.categories.forEach(function(cat){
-        cats.push('<a href="' + config.root + cat.path + '">' + cat.name + '</a>');
-    });%>
-    &nbsp;
-    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-      <circle cx="24" cy="8" r="2"></circle>
-      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
-    </svg>
-    &nbsp;
-    <%- cats.join('·') %>
-<% } %>
-
-
-<% if (item.tags && item.tags.length){ %>
-    <% var tags = [];
-        item.tags.forEach(function(tag){
-        tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    });%>
-    &nbsp;
-    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-      <circle cx="24" cy="8" r="2"></circle>
-      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
-    </svg>
-    &nbsp;
-    <%- tags.join('·') %>
-<% } %>
+<%
+  var compact = typeof compact !== 'undefined' ? compact : false;
+  var plainContent = strip_html(item.content || '').replace(/\s+/g, '');
+  var categories = item.categories ? item.categories.toArray() : [];
+  var tags = item.tags ? item.tags.toArray() : [];
+%>
+<div class="post-meta<%= compact ? ' post-meta-compact' : '' %>">
+  <time datetime="<%= date_xml(item.date) %>"><%= item.date.format(config.date_format) %></time>
+  <% if (plainContent.length) { %><span aria-hidden="true">·</span><span><%= plainContent.length %> <%= __('word_count') %></span><% } %>
+  <% if (!compact && categories.length) { %>
+    <span aria-hidden="true">·</span>
+    <span class="post-taxonomy" aria-label="<%= __('categories') %>">
+      <% categories.forEach(function(category, index) { %><% if (index) { %><span>, </span><% } %><a href="<%- url_for(category.path) %>"><%= category.name %></a><% }); %>
+    </span>
+  <% } %>
+  <% if (!compact && tags.length) { %>
+    <span aria-hidden="true">·</span>
+    <span class="post-taxonomy post-tags" aria-label="<%= __('tags') %>">
+      <% tags.forEach(function(tag) { %><a href="<%- url_for(tag.path) %>">#<%= tag.name %></a><% }); %>
+    </span>
+  <% } %>
+  <% if (!compact && theme.stats && theme.stats.busuanzi) { %>
+    <span class="post-views" id="busuanzi_container_page_pv" style="display: none"><span aria-hidden="true">·</span> <span id="busuanzi_value_page_pv"></span> <%= __('page_views') %></span>
+  <% } %>
+</div>

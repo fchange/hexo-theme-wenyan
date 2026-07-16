@@ -7,9 +7,11 @@
 | `src/app/page.tsx` | `layout/index.ejs` | Intro plus featured posts |
 | `src/app/blog/page.tsx` | Hexo archive/list pages | Chronological post list |
 | `src/app/blog/[...slug]/page.tsx` | `layout/post.ejs` | Article and wide-screen TOC |
+| Post presentation | `layout/_partial/post/title.ejs`, `meta.ejs`, `comment.ejs` | Shared title, taxonomy, linked-post, statistics, and comment contracts |
 | `src/components/mdx-components.tsx` | `.post-content` in `source/css/theme.css` | Markdown typography |
 | `src/components/toc.tsx` | Hexo `toc()` plus `source/js/theme.js` | Nested TOC and active heading |
 | `src/components/go-to-top.tsx` | `.back-top-link` | Back-to-top control |
+| Site search command | `layout/_partial/search.ejs` plus `source/js/theme.js` | Optional Google site-search dialog without a generated index |
 | Tailwind utility classes | `source/css/theme.css` | Single readable CSS source |
 | Content Collections front matter | Hexo front matter | `title`, `date`, `featured`, excerpt/summary |
 

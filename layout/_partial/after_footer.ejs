@@ -1,1 +1,4 @@
 <script src="<%- url_for('/js/theme.js') %>"></script>
+<% if (theme.stats && theme.stats.busuanzi) { %>
+  <script src="<%- url_for('/js/stats.js') %>" data-endpoint="<%- theme.stats.endpoint || 'https://busuanzi.ibruce.info/busuanzi' %>"></script>
+<% } %>

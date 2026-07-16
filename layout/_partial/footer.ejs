@@ -20,6 +20,12 @@
     <div class="site-footer-content">
       <p class="site-footer-copy"><%= footerText %></p>
       <% if (footer.description) { %><p class="site-footer-description"><%= footer.description %></p><% } %>
+      <% if (theme.stats && theme.stats.busuanzi) { %>
+        <p class="site-stats">
+          <span id="busuanzi_container_site_pv" style="display: none"><%= __('site_views') %> <span id="busuanzi_value_site_pv"></span></span>
+          <span id="busuanzi_container_site_uv" style="display: none"><%= __('site_visitors') %> <span id="busuanzi_value_site_uv"></span></span>
+        </p>
+      <% } %>
     </div>
     <% if (Object.keys(footerLinks).length) { %>
       <nav class="site-footer-links" aria-label="Footer navigation">

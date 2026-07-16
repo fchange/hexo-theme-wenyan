@@ -68,6 +68,8 @@ You will usually want to adjust:
 - `footer_info`
 - `footer`
 - `motion`
+- `search`
+- `stats`
 - `valine`
 
 `navigation_items` and `social_items` are optional ordered list forms. When set, they take precedence over `navigation` and `social`:
@@ -100,6 +102,17 @@ footer:
     RSS: /atom.xml
 ```
 
+Search uses Google site search without generating a local index. Busuanzi counters are also optional; both integrations are disabled by default:
+
+```yml
+search:
+  enabled: true
+
+stats:
+  busuanzi: true
+  endpoint: https://busuanzi.ibruce.info/busuanzi
+```
+
 ## Features
 
 - clean home hero and article listing
@@ -108,6 +121,8 @@ footer:
 - archive pages matching the same reading rhythm
 - article pages with sticky table of contents on wide screens
 - configurable footer and friends page
+- categories, tags, linked posts, and localized article metadata
+- optional site search and privacy-conscious opt-in visitor counters
 - optimized code blocks with copy button
 - WenKai webfont integration
 - optional Valine comments
@@ -124,7 +139,7 @@ featured: true
 
 ## Notes
 
-- Search is not bundled. Use a Hexo search generator such as `hexo-generator-search`.
+- Search opens Google site-search results and does not require a Hexo search generator.
 - If you want LaTeX rendering, install a renderer that fits your Hexo stack and keep `latex: true`.
 - `source/css/theme.css` is the single stylesheet source and requires no build step.
 - The production integration at [fchange.github.io](https://fchange.github.io/) is the reference implementation for the current theme release.

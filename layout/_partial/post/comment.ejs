@@ -1,49 +1,44 @@
-<% var isIndex = typeof index !== 'undefined' ? index : false; %>
-<% if(!isIndex){ %>
-    <% if(config.disqus_shortname){ %>
-        <div id="disqus_thread"></div>
-        <script>
-
+<%
+  var commentsEnabled = item.comments !== false;
+  var valineEnabled = theme.valine && theme.valine.enable;
+  var disqusEnabled = config.disqus_shortname;
+%>
+<% if (commentsEnabled && (disqusEnabled || valineEnabled)) { %>
+  <section class="comments" aria-labelledby="comments-title">
+    <h2 id="comments-title"><%= __('comments') %></h2>
+    <% if (disqusEnabled) { %>
+      <div id="disqus_thread"></div>
+      <script>
         var disqus_config = function () {
-        this.page.url = '<%= url %>';
-        this.page.identifier = <%= item.id %>;
+          this.page.url = <%- JSON.stringify(full_url_for(item.path)) %>;
+          this.page.identifier = <%- JSON.stringify(item.path) %>;
         };
-
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-
-        s.src = '//<%- config.disqus_shortname%>.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
+        (function () {
+          var script = document.createElement('script');
+          script.src = 'https://<%- config.disqus_shortname %>.disqus.com/embed.js';
+          script.setAttribute('data-timestamp', String(Date.now()));
+          (document.head || document.body).appendChild(script);
         })();
-        </script>
-    <% } else if(theme.valine && theme.valine.enable){ %>
-        <style>
-        .vcard .vimg{left:0;}
-        </style>
-        <div id="vcomment" class="vcomment" style="padding:0 6% 0 7%;"></div>
-        <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-        <script>
-            var GUEST_INFO = ['nick','mail','link'];
-            var guest_info = '<%= theme.valine.guest_info %>'.split(',').filter(function(item){
-                return GUEST_INFO.indexOf(item) > -1
-            });
-            var notify = '<%= theme.valine.notify %>' == true;
-            var verify = '<%= theme.valine.verify %>' == true;
-            var valine = new Valine();
-            valine.init({
-                el: '.vcomment',
-                notify: notify,
-                verify: verify,
-                appId: "<%= theme.valine.appId %>",
-                appKey: "<%= theme.valine.appKey %>",
-                placeholder: "<%= theme.valine.placeholder %>",
-                pageSize:'<%= theme.valine.pageSize %>',
-                avatar:'<%= theme.valine.avatar %>',
-                lang:'<%= theme.valine.lang %>'
-            })
-        </script>
+      </script>
+    <% } else { %>
+      <div id="vcomment"></div>
+      <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4/dist/av-min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+      <script>
+        new Valine({
+          el: '#vcomment',
+          appId: <%- JSON.stringify(theme.valine.appId || '') %>,
+          appKey: <%- JSON.stringify(theme.valine.appKey || '') %>,
+          placeholder: <%- JSON.stringify(theme.valine.placeholder || '') %>,
+          pageSize: <%= Number(theme.valine.pageSize) || 10 %>,
+          avatar: <%- JSON.stringify(theme.valine.avatar || 'mm') %>,
+          lang: <%- JSON.stringify(theme.valine.lang || 'en') %>,
+          meta: <%- JSON.stringify((theme.valine.guest_info || 'nick,mail,link').split(',').filter(Boolean)) %>,
+          notify: <%= theme.valine.notify === true %>,
+          verify: <%= theme.valine.verify === true %>,
+          visitor: false
+        });
+      </script>
     <% } %>
+  </section>
 <% } %>
