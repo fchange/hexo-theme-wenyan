@@ -26,6 +26,13 @@
     if (/about|关于/.test(value)) return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>';
   }
+  function isActive(link) {
+    if (!link || /^(?:[a-z]+:)?\/\//i.test(link) || /^mailto:/i.test(link)) return false;
+    var currentPath = '/' + String(page.path || '').replace(/^\/+|index\.html$/g, '');
+    var linkPath = '/' + String(link).replace(/^\/+|index\.html$/g, '');
+    if (linkPath === '/') return currentPath === '/' || /^\/page\//.test(currentPath) || page.layout === 'post';
+    return currentPath.indexOf(linkPath) === 0;
+  }
 %>
 <header class="site-header">
   <div class="site-header-inner">
@@ -42,7 +49,7 @@
 
     <nav class="site-nav" aria-label="Main navigation">
       <% eachLink(navigation, function(label, link) { %>
-        <a href="<%- resolveLink(link) %>"><span class="nav-icon"><%- iconFor(label, link) %></span><span><%= _p(label) %></span></a>
+        <a href="<%- resolveLink(link) %>"<% if (isActive(link)) { %> class="is-active" aria-current="page"<% } %>><span class="nav-icon"><%- iconFor(label, link) %></span><span><%= _p(label) %></span></a>
       <% }) %>
     </nav>
 
@@ -65,7 +72,7 @@
   <nav class="mobile-navigation" id="mobile-navigation" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" type="button" aria-label="Close menu">×</button>
     <% eachLink(navigation, function(label, link) { %>
-      <a href="<%- resolveLink(link) %>"><span class="nav-icon"><%- iconFor(label, link) %></span><span><%= _p(label) %></span></a>
+      <a href="<%- resolveLink(link) %>"<% if (isActive(link)) { %> class="is-active" aria-current="page"<% } %>><span class="nav-icon"><%- iconFor(label, link) %></span><span><%= _p(label) %></span></a>
     <% }) %>
   </nav>
   <%- partial('_partial/search') %>

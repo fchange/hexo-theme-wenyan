@@ -25,6 +25,17 @@
     else if (config.description) description = config.description;
 
     var keywords = Array.isArray(config.keywords) ? config.keywords.join(', ') : config.keywords;
+    var accentPresets = {
+      cinnabar: '#b33a2b',
+      pine: '#2f6b57',
+      indigo: '#3f5f8a'
+    };
+    var accentConfig = theme.accent || {};
+    var accentPreset = accentConfig.preset || 'cinnabar';
+    var customAccent = typeof accentConfig === 'string' ? accentConfig : accentConfig.color;
+    var accentColor = /^#[0-9a-f]{6}$/i.test(customAccent || '')
+      ? customAccent
+      : (accentPresets[accentPreset] || accentPresets.cinnabar);
   %>
   <title><%= fullTitle %></title>
   <% if (config.author) { %><meta name="author" content="<%= config.author %>"><% } %>
@@ -51,5 +62,6 @@
   </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
   <link rel="stylesheet" href="<%- url_for('/css/theme.css') %>">
+  <style>:root { --accent-source: <%= accentColor %>; }</style>
   <% if (theme.latex) { %><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><% } %>
 </head>

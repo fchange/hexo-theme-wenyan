@@ -1,5 +1,11 @@
 logo: Wenyan
 
+# Accent presets: cinnabar, pine, or indigo. A quoted custom Hex color wins
+# over the preset; every interaction shade is derived from this single source.
+accent:
+  preset: cinnabar
+  color: ""
+
 navigation:
   home: /
   archives: /archives/

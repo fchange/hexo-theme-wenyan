@@ -25,3 +25,7 @@ The page entrance must not transform `.site-main`: a transformed ancestor change
 - At `1280px` and wider, the TOC occupies the right grid column with a `40px` gap.
 - Mobile content uses the available viewport minus stable side padding.
 - The `15px` desktop scrollbar means measured content coordinates may appear `7.5px` left of `window.innerWidth / 2`; they are centered within `document.documentElement.clientWidth`.
+
+## Accent Color
+
+Wenyan accepts one source color through the `accent` configuration. CSS derives strong, muted, soft, and selection variants with `color-mix()` against the active light or dark theme tokens. Accent color communicates navigation, links, focus, selection, taxonomy, current TOC state, external destinations, search matches, and successful copy actions; it does not color page backgrounds, body copy, headings, cards, or the footer surface.

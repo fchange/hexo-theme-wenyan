@@ -25,7 +25,7 @@
           <li class="archive-item">
             <time class="archive-time" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
             <div class="archive-detail">
-              <a href="<%- post.link || url_for(post.path) %>"<% if (post.link) { %> target="_blank" rel="noopener noreferrer"<% } %>><%= post.title %><% if (post.link) { %> <span aria-label="<%= __('external_link') %>">↗</span><% } %></a>
+              <a href="<%- post.link || url_for(post.path) %>"<% if (post.link) { %> target="_blank" rel="noopener noreferrer"<% } %>><%= post.title %><% if (post.link) { %> <span class="external-link-mark" aria-label="<%= __('external_link') %>">↗</span><% } %></a>
               <p><%= strip_html(post.excerpt || post.content || '').replace(/\s+/g, ' ').trim().substring(0, theme.excerpt_num || 140) %></p>
             </div>
           </li>

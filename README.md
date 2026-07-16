@@ -1,6 +1,6 @@
 # Hexo Theme Wenyan
 
-[🇨🇳 中文](/README.zh.md)
+[🇨🇳 中文](README.zh.md)
 
 Wenyan is a minimal, typography-first Hexo theme for personal blogs.
 
@@ -8,14 +8,17 @@ It is designed for calm writing, focused reading, and lightweight customization.
 
 **Live demo:** [fchange.github.io](https://fchange.github.io/)
 
-It combines:
+![Wenyan accent presets: Cinnabar, Pine, and Indigo](docs/images/accent-presets.png)
 
-- a quiet paper-like reading surface
-- compact post lists inspired by `guangzhengli/nextjs-blog-template`
-- a narrow article layout with optional right-side table of contents
-- improved code blocks with language labels and a copy button
+## Why Wenyan
+
+Wenyan keeps the page quiet and lets typography carry the experience. It combines a compact editorial index, a focused long-form article layout, restrained motion, and Hexo-native content features without introducing a frontend build step.
+
+The visual hierarchy follows [`guangzhengli/nextjs-blog-template`](https://github.com/guangzhengli/nextjs-blog-template), while the theme contract remains familiar to Hexo users.
 
 ## Install
+
+Wenyan works with Hexo 6 or newer and uses EJS templates, plain CSS, and vanilla JavaScript.
 
 1. Clone this repo into your Hexo site:
 
@@ -54,11 +57,12 @@ toc: true
 
 ## Configuration
 
-Main theme options live in [`_config.yml`](/_config.yml).
+Main theme options live in [`_config.yml`](_config.yml).
 
 You will usually want to adjust:
 
 - `logo`
+- `accent`
 - `navigation`
 - `navigation_items`
 - `social`
@@ -81,6 +85,16 @@ navigation_items:
   - label: Archives
     link: /archives/
 ```
+
+Choose one of the three editorial accent presets, or provide one quoted six-digit Hex color. Wenyan derives stronger, muted, soft, and selection shades automatically:
+
+```yml
+accent:
+  preset: cinnabar # cinnabar | pine | indigo
+  color: ""        # for example, "#c24132"; overrides preset
+```
+
+The accent is intentionally limited to navigation state, link underlines and hover, active TOC entries, tags, external-link marks, input focus, text selection, copied state, and search highlights.
 
 The article header mirrors the upstream transition from `48rem` to `72rem`:
 
@@ -115,18 +129,11 @@ stats:
 
 ## Features
 
-- clean home hero and article listing
-- light and dark themes with a persistent theme switcher
-- responsive desktop and mobile navigation with Lucide icons
-- archive pages matching the same reading rhythm
-- article pages with sticky table of contents on wide screens
-- configurable footer and friends page
-- categories, tags, linked posts, and localized article metadata
-- optional site search and privacy-conscious opt-in visitor counters
-- optimized code blocks with copy button
-- WenKai webfont integration
-- optional Valine comments
-- optional MathJax support
+- **Editorial reading:** compact featured-post index, narrow long-form content, sticky desktop TOC, and semantic year-grouped archives
+- **Personalization:** light/dark mode, three accent presets, one-color custom accents, ordered navigation, and configurable footer
+- **Content model:** categories, tags, linked posts, per-post TOC and comments, friends pages, and localized metadata
+- **Utilities:** responsive Lucide navigation, copyable code blocks, optional Google site search, Busuanzi counters, Valine, and MathJax
+- **Simple maintenance:** one readable stylesheet and no theme build step
 
 Like the upstream template, the home page only lists posts with `featured: true` in front matter:
 
@@ -137,12 +144,25 @@ featured: true
 ---
 ```
 
+Useful per-post fields include:
+
+```yml
+---
+title: Linked post
+featured: true
+toc: true
+comments: false
+link: https://example.com/original-article
+---
+```
+
 ## Notes
 
 - Search opens Google site-search results and does not require a Hexo search generator.
 - If you want LaTeX rendering, install a renderer that fits your Hexo stack and keep `latex: true`.
 - `source/css/theme.css` is the single stylesheet source and requires no build step.
 - The production integration at [fchange.github.io](https://fchange.github.io/) is the reference implementation for the current theme release.
+- Accent derivation uses CSS `color-mix()`. Current evergreen browsers are recommended.
 
 ## Credits
 
