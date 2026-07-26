@@ -2,9 +2,24 @@
 <%
   var headerMotion = !theme.motion || theme.motion.header_expand !== false;
   var motionDuration = (theme.motion && Number(theme.motion.duration)) || 500;
+  var sketchConfig = theme.sketch || {};
+  var sketchEnabled = sketchConfig.enable !== false;
+  var sketchFreq = Number(sketchConfig.base_frequency) || 0.062;
+  var sketchScale = Number(sketchConfig.scale) || 6;
+  var sketchAnimate = sketchConfig.animate === true;
 %>
-<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %><%= headerMotion ? ' has-header-motion' : '' %>" style="--header-motion-duration: <%= motionDuration %>ms" data-copy-label="<%= __('copy') %>" data-copied-label="<%= __('copied') %>" data-copy-failed-label="<%= __('copy_failed') %>" data-light-theme-label="<%= __('light_theme') %>" data-dark-theme-label="<%= __('dark_theme') %>">
+<body class="<%= page.layout === 'post' ? 'is-post' : 'is-page' %><%= headerMotion ? ' has-header-motion' : '' %><%= sketchEnabled ? ' has-sketch' : '' %>" style="--header-motion-duration: <%= motionDuration %>ms" data-copy-label="<%= __('copy') %>" data-copied-label="<%= __('copied') %>" data-copy-failed-label="<%= __('copy_failed') %>" data-light-theme-label="<%= __('light_theme') %>" data-dark-theme-label="<%= __('dark_theme') %>">
   <a id="top"></a>
+  <% if (sketchEnabled) { %>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="<%= sketchFreq %>" numOctaves="1" seed="0" result="n"><% if (sketchAnimate) { %><animate attributeName="seed" values="0;7;13" dur="0.36s" calcMode="discrete" repeatCount="indefinite"/><% } %></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="<%= sketchScale %>" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+  <% } %>
   <div class="site-shell">
     <%- partial('_partial/navigator') %>
     <div class="site-main">

@@ -69,6 +69,7 @@ toc: true
 - `labels`
 - `footer_info`
 - `footer`
+- `sketch`
 - `motion`
 - `search`
 - `stats`
@@ -103,6 +104,16 @@ search:
 stats:
   busuanzi: true
   endpoint: https://busuanzi.ibruce.info/busuanzi
+```
+
+内联图标默认启用手绘风格，由 SVG 湍流 + 位移滤镜实时渲染——不修改任何图标资源，站点 Logo 保持锐利。可以调整抖动参数或整体关闭：
+
+```yml
+sketch:
+  enable: true           # 设为 false 恢复精确几何图标
+  base_frequency: 0.062  # 噪声密度——越大抖动越细密
+  scale: 6               # 位移力度——越大线条越粗粝
+  animate: false         # 循环噪声种子，产生"沸腾"手绘动画
 ```
 
 文章页 Header 会复刻上游模板，从 `48rem` 平滑扩展至 `72rem`：

@@ -70,6 +70,15 @@ valine:
 
 excerpt_num: 140
 
+# Hand-drawn "sketch" style for inline icons, via an SVG turbulence +
+# displacement filter. Applies to nav/social/toolbar icons; the site-brand
+# logo deliberately stays crisp. Enabled by default.
+sketch:
+  enable: true
+  base_frequency: 0.062  # noise density — higher = tighter wobble
+  scale: 6               # displacement strength — higher = rougher line
+  animate: false         # cycle the noise seed for a "boiling" hand-drawn motion
+
 # Lightweight page motion. The article header expands from 48rem to 72rem,
 # matching the upstream Next.js transition.
 motion:

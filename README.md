@@ -71,6 +71,7 @@ You will usually want to adjust:
 - `labels`
 - `footer_info`
 - `footer`
+- `sketch`
 - `motion`
 - `search`
 - `stats`
@@ -95,6 +96,16 @@ accent:
 ```
 
 The accent is intentionally limited to navigation state, link underlines and hover, active TOC entries, tags, external-link marks, input focus, text selection, copied state, and search highlights.
+
+Inline icons ship with a hand-drawn sketch style by default, rendered live by an SVG turbulence + displacement filter — no icon assets are modified, and the site-brand logo stays crisp. Tune the wobble or switch it off:
+
+```yml
+sketch:
+  enable: true           # set false for crisp geometric icons
+  base_frequency: 0.062  # noise density — higher = tighter wobble
+  scale: 6               # displacement strength — higher = rougher line
+  animate: false         # cycle the noise seed for a "boiling" motion
+```
 
 The article header mirrors the upstream transition from `48rem` to `72rem`:
 
